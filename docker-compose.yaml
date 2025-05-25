@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  snowflake_db:
+    image: postgres:latest
+    container_name: snowflake_db
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./pgconf/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+    command: postgres -c config_file=/var/lib/postgresql/data/postgresql.conf
+
+volumes:
+  postgres_data:
